@@ -44,7 +44,8 @@ impl TaskManager {
     }
 
     pub fn add_task(&mut self, title: &str) {
-        let id = self.tasks.len() as u32 + 1;
+        let id = self.tasks.iter().map(|task| task.id).max().unwrap_or(0) + 1;
+
         let task = Task {
             id,
             title: title.to_string(),
