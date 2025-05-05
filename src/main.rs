@@ -1,8 +1,8 @@
+use serde::{Deserialize, Serialize};
 use std::env;
 use std::fs::{File, OpenOptions};
 use std::io::{self, BufReader, BufWriter};
 use std::path::Path;
-use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Task {
@@ -29,11 +29,15 @@ impl TaskManager {
         let reader = BufReader::new(file);
         let tasks = serde_json::from_reader(reader).unwrap_or_else(|_| Vec::new());
 
-        Ok(TaskManager {tasks})
+        Ok(TaskManager { tasks })
     }
 
     pub fn save_to_file<P: AsRef<Path>>(&self, path: P) -> io::Result<()> {
-        let file = OpenOptions::new().write(true).create(true).truncate(true).open(path)?;
+        let file = OpenOptions::new()
+            .write(true)
+            .create(true)
+            .truncate(true)
+            .open(path)?;
         let writer = BufWriter::new(file);
         serde_json::to_writer_pretty(writer, &self.tasks)?;
         Ok(())
@@ -90,4 +94,3 @@ fn main() {
         }
     }
 }
-
