@@ -1,7 +1,7 @@
 use crate::manager::TaskManager;
 
 pub fn run(manager: &mut TaskManager, args: &[String], data_path: &str) {
-    if args.len() < 1 {
+    if args.is_empty() {
         eprintln!("Please provide the task ID to mark as done.");
         return;
     }
