@@ -64,6 +64,14 @@ impl TaskManager {
             );
         }
     }
+
+    pub fn mark_done(&mut self, id: u32) -> bool {
+        if let Some(task) = self.tasks.iter_mut().find(|t| t.id == id) {
+            task.completed = true;
+            return true;
+        }
+        false
+    }
 }
 
 fn main() {
@@ -89,6 +97,26 @@ fn main() {
         }
         "list" => {
             manager.list_tasks();
+        }
+        "done" => {
+            if args.len() < 3 {
+                eprintln!("Please provide the task ID to mark as done.");
+                return;
+            }
+
+            match args[2].parse::<u32>() {
+                Ok(id) => {
+                    if manager.mark_done(id) {
+                        manager.save_to_file(data_path).unwrap();
+                        println!("Task {} marked as done.", id)
+                    } else {
+                        eprintln!("Task with ID {} not found.", id);
+                    }
+                }
+                Err(_) => {
+                    eprintln!("Invalid task ID: {}", args[2])
+                }
+            }
         }
         _ => {
             eprintln!("Unknown command: {}", args[1]);
