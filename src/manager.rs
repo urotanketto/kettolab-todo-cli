@@ -132,4 +132,30 @@ mod tests {
         let expected = "[ ] 1: First task\n[x] 2: Second task";
         assert_eq!(output, expected);
     }
+
+    #[test]
+    fn test_mark_done() {
+        let mut manager = TaskManager {
+            tasks: vec![Task {
+                id: 1,
+                title: "Do homework".to_string(),
+                completed: false,
+            }],
+        };
+
+        // Case 1: mark existing task as done
+        let result = manager.mark_done(1);
+        assert!(result, "Expected mark_done to return true for existing ID");
+        assert!(
+            manager.tasks[0].completed,
+            "Expected task to be marked as completed"
+        );
+
+        // Case 2: attempt to mark non-existent task
+        let result = manager.mark_done(2);
+        assert!(
+            !result,
+            "Expected mark_done to return false for non-existent ID"
+        );
+    }
 }
