@@ -90,6 +90,7 @@ impl TaskManager {
 #[cfg(test)]
 mod tests {
     use super::TaskManager;
+    use crate::task::Task;
 
     #[test]
     fn test_add_task() {
@@ -107,5 +108,28 @@ mod tests {
         assert_eq!(task.title, task_title);
         assert_eq!(task.id, 1);
         assert!(!task.completed);
+    }
+
+    #[test]
+    fn test_format_tasks() {
+        let manager = TaskManager {
+            tasks: vec![
+                Task {
+                    id: 1,
+                    title: "First task".to_string(),
+                    completed: false,
+                },
+                Task {
+                    id: 2,
+                    title: "Second task".to_string(),
+                    completed: true,
+                },
+            ],
+        };
+
+        let output = manager.format_tasks();
+
+        let expected = "[ ] 1: First task\n[x] 2: Second task";
+        assert_eq!(output, expected);
     }
 }
