@@ -158,4 +158,30 @@ mod tests {
             "Expected mark_done to return false for non-existent ID"
         );
     }
+
+    #[test]
+    fn test_update_task() {
+        let mut manager = TaskManager {
+            tasks: vec![Task {
+                id: 1,
+                title: "Old Title".to_string(),
+                completed: false,
+            }],
+        };
+
+        //Case 1: update existing task
+        let updated = manager.update_task(1, "New Title");
+        assert!(
+            updated,
+            "Expected update_task to return true for existing ID"
+        );
+        assert_eq!(manager.tasks[0].title, "New Title");
+
+        // Case 2: update non-existent task
+        let updated = manager.update_task(2, "Should Not Work");
+        assert!(
+            !updated,
+            "Expected update_task to return false for non-existent ID",
+        );
+    }
 }
