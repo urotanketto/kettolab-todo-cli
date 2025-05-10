@@ -47,15 +47,22 @@ impl TaskManager {
         self.tasks.push(task);
     }
 
+    pub fn format_tasks(&self) -> String {
+        self.tasks
+            .iter()
+            .map(|task| {
+                if task.completed {
+                    format!("[x] {}: {}", task.id, task.title)
+                } else {
+                    format!("[ ] {}: {}", task.id, task.title)
+                }
+            })
+            .collect::<Vec<String>>()
+            .join("\n")
+    }
+
     pub fn list_tasks(&self) {
-        for task in &self.tasks {
-            println!(
-                "[{}] {} - {}",
-                task.id,
-                task.title,
-                if task.completed { "done" } else { "pending" }
-            );
-        }
+        println!("{}", self.format_tasks());
     }
 
     pub fn mark_done(&mut self, id: u32) -> bool {
