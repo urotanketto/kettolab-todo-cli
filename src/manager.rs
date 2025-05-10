@@ -79,3 +79,26 @@ impl TaskManager {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::TaskManager;
+
+    #[test]
+    fn test_add_task() {
+        // Arrange: Set up test data
+        let task_title = "Test task";
+        let mut manager = TaskManager::new();
+
+        // Add a task
+        manager.add_task(task_title);
+
+        // Verify the task was added
+        assert_eq!(manager.tasks.len(), 1);
+
+        let task = &manager.tasks[0];
+        assert_eq!(task.title, task_title);
+        assert_eq!(task.id, 1);
+        assert!(!task.completed);
+    }
+}
