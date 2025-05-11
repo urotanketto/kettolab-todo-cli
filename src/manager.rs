@@ -93,6 +93,29 @@ mod tests {
     use crate::task::Task;
 
     #[test]
+    fn test_save_and_load_tasks_with_tempfile() {
+        use tempfile::NamedTempFile;
+
+        // Create a temporary file
+        let file = NamedTempFile::new().expect("Failed to create temp file");
+        let path = file.path();
+
+        // Save tasks to the temp file
+        let mut manager = TaskManager::new();
+        manager.add_task("Write tests");
+        manager.add_task("Review PR");
+        manager.save_to_file(path).expect("Failed to save tasks");
+
+        // Load tasks from the same temp file
+        let loaded = TaskManager::load_from_file(path).expect("Failed to load tasks");
+
+        // Verify contents
+        assert_eq!(loaded.tasks.len(), 2);
+        assert_eq!(loaded.tasks[0].title, "Write tests");
+        assert_eq!(loaded.tasks[1].title, "Review PR");
+    }
+
+    #[test]
     fn test_add_task() {
         // Arrange: Set up test data
         let task_title = "Test task";
