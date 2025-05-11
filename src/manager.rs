@@ -41,7 +41,7 @@ impl TaskManager {
 
         let task = Task {
             id,
-            title: title.to_string(),
+            title: title.into(),
             completed: false,
         };
         self.tasks.push(task);
@@ -79,7 +79,7 @@ impl TaskManager {
 
     pub fn update_task(&mut self, id: u32, new_title: &str) -> bool {
         if let Some(task) = self.get_task_mut(id) {
-            task.title = new_title.to_string();
+            task.title = new_title.into();
             true
         } else {
             false
@@ -139,12 +139,12 @@ mod tests {
             tasks: vec![
                 Task {
                     id: 1,
-                    title: "First task".to_string(),
+                    title: "First task".into(),
                     completed: false,
                 },
                 Task {
                     id: 2,
-                    title: "Second task".to_string(),
+                    title: "Second task".into(),
                     completed: true,
                 },
             ],
@@ -161,7 +161,7 @@ mod tests {
         let mut manager = TaskManager {
             tasks: vec![Task {
                 id: 1,
-                title: "Do homework".to_string(),
+                title: "Do homework".into(),
                 completed: false,
             }],
         };
@@ -187,7 +187,7 @@ mod tests {
         let mut manager = TaskManager {
             tasks: vec![Task {
                 id: 1,
-                title: "Old Title".to_string(),
+                title: "Old Title".into(),
                 completed: false,
             }],
         };
@@ -214,12 +214,12 @@ mod tests {
             tasks: vec![
                 Task {
                     id: 1,
-                    title: "Task 1".to_string(),
+                    title: "Task 1".into(),
                     completed: false,
                 },
                 Task {
                     id: 2,
-                    title: "Task 2".to_string(),
+                    title: "Task 2".into(),
                     completed: false,
                 },
             ],
@@ -245,7 +245,7 @@ mod tests {
         let mut manager = TaskManager {
             tasks: vec![Task {
                 id: 1,
-                title: "Task 1".to_string(),
+                title: "Task 1".into(),
                 completed: false,
             }],
         };

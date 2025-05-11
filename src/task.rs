@@ -15,7 +15,7 @@ mod tests {
     fn test_task_serialization_roundtrip() {
         let original_task = Task {
             id: 1,
-            title: "Write tests".to_string(),
+            title: "Write tests".into(),
             completed: false,
         };
 
