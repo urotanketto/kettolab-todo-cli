@@ -183,32 +183,6 @@ mod tests {
     }
 
     #[test]
-    fn test_update_task() {
-        let mut manager = TaskManager {
-            tasks: vec![Task {
-                id: 1,
-                title: "Old Title".into(),
-                completed: false,
-            }],
-        };
-
-        //Case 1: update existing task
-        let updated = manager.update_task(1, "New Title");
-        assert!(
-            updated,
-            "Expected update_task to return true for existing ID"
-        );
-        assert_eq!(manager.tasks[0].title, "New Title");
-
-        // Case 2: update non-existent task
-        let updated = manager.update_task(2, "Should Not Work");
-        assert!(
-            !updated,
-            "Expected update_task to return false for non-existent ID",
-        );
-    }
-
-    #[test]
     fn test_get_task_mut_found() {
         let mut manager = TaskManager {
             tasks: vec![
@@ -253,5 +227,31 @@ mod tests {
         // Test: Sourl return None for a nonexistent ID
         let task = manager.get_task_mut(99);
         assert!(task.is_none());
+    }
+
+    #[test]
+    fn test_update_task() {
+        let mut manager = TaskManager {
+            tasks: vec![Task {
+                id: 1,
+                title: "Old Title".into(),
+                completed: false,
+            }],
+        };
+
+        //Case 1: update existing task
+        let updated = manager.update_task(1, "New Title");
+        assert!(
+            updated,
+            "Expected update_task to return true for existing ID"
+        );
+        assert_eq!(manager.tasks[0].title, "New Title");
+
+        // Case 2: update non-existent task
+        let updated = manager.update_task(2, "Should Not Work");
+        assert!(
+            !updated,
+            "Expected update_task to return false for non-existent ID",
+        );
     }
 }
