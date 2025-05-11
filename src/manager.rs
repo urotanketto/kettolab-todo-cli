@@ -184,4 +184,51 @@ mod tests {
             "Expected update_task to return false for non-existent ID",
         );
     }
+
+    #[test]
+    fn test_get_task_mut_found() {
+        let mut manager = TaskManager {
+            tasks: vec![
+                Task {
+                    id: 1,
+                    title: "Task 1".to_string(),
+                    completed: false,
+                },
+                Task {
+                    id: 2,
+                    title: "Task 2".to_string(),
+                    completed: false,
+                },
+            ],
+        };
+
+        // Test: Should find the task with ID 2
+        if let Some(task) = manager.get_task_mut(2) {
+            assert_eq!(task.title, "Task 2");
+
+            // Modify the task to ensure the mutable reference works
+            task.completed = true;
+        } else {
+            panic!("Expected to find task with ID 2");
+        }
+
+        // Confirm that the modification is reflected in the original structure
+        let updated_task = manager.tasks.iter().find(|t| t.id == 2).unwrap();
+        assert!(updated_task.completed);
+    }
+
+    #[test]
+    fn test_get_task_mut_not_found() {
+        let mut manager = TaskManager {
+            tasks: vec![Task {
+                id: 1,
+                title: "Task 1".to_string(),
+                completed: false,
+            }],
+        };
+
+        // Test: Sourl return None for a nonexistent ID
+        let task = manager.get_task_mut(99);
+        assert!(task.is_none());
+    }
 }
