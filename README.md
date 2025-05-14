@@ -23,6 +23,7 @@ This project uses GitHub Actions to enforce code quality on every push:
 
 - ✅ `cargo fmt` – checks code formatting
 - ✅ `cargo clippy` – checks for common mistakes and style issues
+- ✅ `cargo test` – runs all unit tests to verify core functionality
 
 You can find the CI workflow in [.github/workflows/ci.yml](.github/workflows/ci.yml)
 
@@ -31,4 +32,31 @@ To run checks locally:
 ```bash
 cargo fmt --check
 cargo clippy -- -D warnings
+cargo test
+```
+
+---
+
+## Usage
+
+Build and run the application with Cargo:
+
+```bash
+cargo build
+cargo run -- [COMMAND] [ARGS]
+```
+
+### Commands
+```
+# Add a new task
+cargo run -- add "Buy milk"
+
+# List all tasks
+cargo run -- list
+
+# Mark a task as done
+cargo run -- done 1
+
+# Update a task's title
+cargo run -- update 1 "Buy oat milk"
 ```
